@@ -1,4 +1,6 @@
 import streamlit as st
+import requests
+import json
 
 # Configuración de la página
 st.set_page_config(
@@ -7,7 +9,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Estilos CSS con selectores de alta especificidad
+# Estilos CSS avanzados con selectores de alta especificidad
 st.markdown("""
     <style>
     /* Forzar fondo oscuro en toda la aplicación */
@@ -89,7 +91,7 @@ st.markdown("""
 
 st.markdown("---")
 
-# Formulario de Diagnóstico con Captura de Datos Corporativos
+# Formulario de Diagnóstico con Captura de Datos Corporativos y Celular
 with st.form("diagnostic_form"):
     
     st.markdown("### 🏢 1. Credenciales de la Organización")
@@ -97,9 +99,10 @@ with st.form("diagnostic_form"):
     with col1:
         empresa = st.text_input("Nombre de la Empresa", placeholder="Ej. Corporación Logística S.A.C.")
         representante = st.text_input("Nombre del Representante", placeholder="Ej. Rubens Temoche")
-    with col2:
         cargo = st.text_input("Cargo C-Level / Directivo", placeholder="Ej. CEO / Gerente de Operaciones")
+    with col2:
         correo = st.text_input("Correo Corporativo", placeholder="Ej. rtemoche@empresa.com")
+        celular = st.text_input("Número de Celular / WhatsApp", placeholder="Ej. +51 999 999 999")
         
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("### 🧠 2. Test de Amnesia Corporativa")
@@ -140,8 +143,8 @@ with st.form("diagnostic_form"):
 
 # Procesamiento al hacer clic en el botón del formulario
 if submit_button:
-    if not empresa or not correo:
-        st.warning("⚠️ Por favor, ingresa al menos el Nombre de la Empresa y tu Correo Corporativo para generar el reporte personalizado.")
+    if not empresa or not correo or not celular:
+        st.warning("⚠️ Por favor, completa la Empresa, tu Correo Corporativo y tu Número de Celular para generar el reporte.")
     else:
         score = 0
         
@@ -161,6 +164,26 @@ if submit_button:
         
         perdida_amnesia = "$45,000 - $120,000 USD" if exposure > 60 else "$15,000 - $40,000 USD" if exposure > 30 else "$5,000 USD (Riesgo Bajo)"
         costo_friccion = "Alto (Sueldos quemados en tareas manuales repetitivas)" if "Horas de trabajo" in q3 else "Moderado (Ineficiencias intermitentes)" if "macros" in q3 else "Optimizado"
+        nivel_riesgo = f"Crítica ({exposure}%)" if exposure >= 60 else f"Moderada ({exposure}%)" if exposure >= 30 else f"Controlada ({exposure}%)"
+
+        # --- ENVÍO DE DATOS A GOOGLE SHEETS (Webhook de Apps Script) ---
+        WEBHOOK_URL = "TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI"  # La colocaremos en el siguiente paso
+        
+        payload = {
+            "empresa": empresa,
+            "representante": representante,
+            "cargo": cargo,
+            "correo": correo,
+            "celular": celular,
+            "riesgo": nivel_riesgo,
+            "perdida": perdida_amnesia
+        }
+        
+        try:
+            # response = requests.post(WEBHOOK_URL, json=payload)
+            pass # Se activará al configurar el enlace de Google Apps Script
+        except Exception as e:
+            pass
 
         st.success(f"¡Diagnóstico procesado con éxito para **{empresa}** ({representante} - {cargo})!")
         
@@ -176,7 +199,7 @@ if submit_button:
         st.markdown(f"""
         <div class='metric-card'>
         <ul>
-            <li><b>Organización Evaluada:</b> {empresa} | <b>Contacto:</b> {correo}</li>
+            <li><b>Organización:</b> {empresa} | <b>Contacto:</b> {correo} | <b>Cel:</b> {celular}</li>
             <li><b>Impacto Estimado por Amnesia Corporativa:</b> Pérdida potencial anualizada valorada en <b>{perdida_amnesia}</b> por dependencia de talento crítico.</li>
             <li><b>Vulnerabilidad de Datos (Shadow AI):</b> Exposición activa de flujos e información sensible ante plataformas de terceros sin gobernanza.</li>
             <li><b>Fricción Operativa (ERP/Logística):</b> Nivel detectado: <b>{costo_friccion}</b>.</li>
