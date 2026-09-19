@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Estilos CSS avanzados con corrección específica para el botón de envío
+# Estilos CSS con selectores de máxima especificidad para forzar el color del botón
 st.markdown("""
     <style>
     /* Forzar fondo oscuro en toda la aplicación */
@@ -19,8 +19,8 @@ st.markdown("""
         background-color: rgba(0,0,0,0);
     }
     
-    /* Forzar texto claro en elementos generales y radios (excepto botones) */
-    p, span:not(.stButton span), label:not(.stButton label), .stRadio label, div[data-baseweb="radio"] div {
+    /* Forzar texto claro en elementos generales y radios */
+    p, span:not(.stButton *), label:not(.stButton *), .stRadio label, div[data-baseweb="radio"] div {
         color: #E2E8F0 !important;
     }
     
@@ -30,21 +30,22 @@ st.markdown("""
         font-weight: 600;
     }
 
-    /* Botón principal corporativo corregido */
-    .stButton>button { 
-        width: 100% !important; 
-        background-color: #3B82F6 !important; 
-        color: #0F172A !important; 
-        font-weight: 700 !important; 
-        border-radius: 8px !important; 
-        padding: 12px !important; 
+    /* FORZAR ESTILO ABSOLUTO PARA EL BOTÓN DE STREAMLIT */
+    div.stButton > button:first-child {
+        width: 100% !important;
+        background-color: #38BDF8 !important; /* Azul cielo brillante de alta visibilidad */
+        color: #020617 !important;           /* Texto negro/azulado muy oscuro */
+        font-weight: 800 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
         border: none !important;
     }
-    .stButton>button p, .stButton>button span {
-        color: #0F172A !important;
+    div.stButton > button:first-child *, div.stButton > button:first-child p, div.stButton > button:first-child span {
+        color: #020617 !important;
+        fill: #020617 !important;
     }
-    .stButton>button:hover { 
-        background-color: #60A5FA !important; 
+    div.stButton > button:first-child:hover {
+        background-color: #7DD3FC !important;
     }
     
     /* Tarjeta de métricas */
