@@ -167,7 +167,7 @@ if submit_button:
         nivel_riesgo = f"Crítica ({exposure}%)" if exposure >= 60 else f"Moderada ({exposure}%)" if exposure >= 30 else f"Controlada ({exposure}%)"
 
         # --- ENVÍO DE DATOS A GOOGLE SHEETS (Webhook de Apps Script) ---
-        WEBHOOK_URL = "TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI"  # La colocaremos en el siguiente paso
+        WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbx15whaD9rkf04Xu4MS7flNCc_rDc3ThMCV2MifNFTdPna4AxLn_Mcif3QBZIWtCtTQlg/exec"  # La colocaremos en el siguiente paso
         
         payload = {
             "empresa": empresa,
@@ -180,7 +180,7 @@ if submit_button:
         }
         
         try:
-            # response = requests.post(WEBHOOK_URL, json=payload)
+            response = requests.post(WEBHOOK_URL, json=payload)
             pass # Se activará al configurar el enlace de Google Apps Script
         except Exception as e:
             pass
