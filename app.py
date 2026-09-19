@@ -1,122 +1,133 @@
 import streamlit as st
 
-# Configuración de la página web estilo C-Level
+# Configuración de la página
 st.set_page_config(
-    page_title="Sovereign AI Readiness | SmartWorld AI",
+    page_title="Diagnóstico de Soberanía C-Level | SmartWorld AI",
     page_icon="🛡️",
     layout="centered"
 )
 
-# Estilos visuales limpios y ejecutivos
+# Estilos CSS limpios y corporativos
 st.markdown("""
     <style>
-    .main-title { font-size: 28px; font-weight: 700; color: #1E293B; text-align: center; }
-    .subtitle { font-size: 16px; color: #64748B; text-align: center; margin-bottom: 30px; }
-    .card { background-color: #F8FAFC; padding: 20px; border-radius: 10px; border-left: 5px solid #2563EB; margin-bottom: 15px; }
+    .main { background-color: #0F172A; color: #F8FAFC; }
+    .stButton>button { width: 100%; background-color: #2563EB; color: white; font-weight: bold; border-radius: 8px; padding: 12px; }
+    .stButton>button:hover { background-color: #1D4ED8; }
+    .metric-card { background: #1E293B; padding: 20px; border-radius: 10px; border: 1px solid #334155; margin-bottom: 20px; }
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<p class="main-title">🛡️ Diagnóstico de Soberanía Cognitiva e Inmunidad Operativa</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Evalúa el riesgo de Amnesia Corporativa y el nivel de exposición de tu organización ante la IA.</p>', unsafe_allow_html=True)
+# Encabezado principal
+st.markdown("<h2 style='text-align: center; color: #FFFFFF;'>🛡️ Diagnóstico de Soberanía Cognitiva e Inmunidad Operativa</h2>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94A3B8;'>Evalúa el riesgo de Amnesia Corporativa, Shadow AI y Fricción Operativa en tu organización.</p>", unsafe_allow_html=True)
+st.markdown("---")
 
-# Formulario del Test (Las 3 Preguntas Clave)
+# Formulario de Diagnóstico
 with st.form("diagnostic_form"):
     
     st.markdown("### 1. 🧠 Test de Amnesia Corporativa")
-    p1 = st.radio(
+    q1 = st.radio(
         "Si el próximo lunes renuncia su pieza clave de ingeniería, operaciones o procesos, ¿en cuánto tiempo su empresa empieza a perder dinero?",
         [
             "Inmediatamente (El 80% del conocimiento vive en su cabeza).",
             "En pocas semanas (Tenemos manuales dispersos en PDFs obsoletos).",
             "Tenemos procesos documentados, estructurados e inmutables."
         ],
-        index=0
+        key="q1"
     )
     
-    st.markdown("### 2. 🔒 Test de Riesgo de 'Shadow AI'")
-    p2 = st.radio(
+    st.markdown("### 2. 🔐 Test de Riesgo de 'Shadow AI'")
+    q2 = st.radio(
         "¿Cómo gestiona actualmente su organización el uso de herramientas de Inteligencia Artificial (ChatGPT, nubes externas) entre sus equipos?",
         [
             "Cada colaborador usa herramientas externas por su cuenta con datos de la empresa.",
             "Usamos cuentas corporativas sueltas, pero sin una directiva de seguridad clara.",
             "Tenemos una infraestructura controlada, soberana y aislada."
         ],
-        index=0
+        key="q2"
     )
     
-    st.markdown("### 3. ⚙️ Test de Fricción Operativa (ERP / Aduanas)", unsafe_allow_html=True)
-    p3 = st.radio(
-        "¿Cuánto tiempo y esfuerzo humano invierte su equipo procesando datos no estructurados (Packing lists, aduanas, ERP/Odoo)?",
+    st.markdown("### 3. ⚙️ Test de Fricción Operativa (ERP / Aduanas)", help="Incluye gestión de Packing Lists, inventarios Odoo, etc.")
+    q3 = st.radio(
+        "¿Cuánto tiempo y esfuerzo humano invierte su equipo procesando datos no estructurados?",
         [
             "Horas de trabajo manual diario; es nuestro mayor cuello de botella.",
             "Tenemos macros o procesos semiautomáticos que fallan a menudo.",
             "Todo nuestro flujo transaccional está integrado y automatizado nativamente."
         ],
-        index=0
+        key="q3"
     )
     
-    # Datos de contacto corporativo para liberar el reporte
-    st.markdown("---")
-    st.markdown("### 📋 Datos Corporativos para el Reporte")
-    col1, col2 = st.columns(2)
-    with col1:
-        company_name = st.text_input("Nombre de la Empresa")
-        corporate_email = st.text_input("Correo Corporativo")
-    with col2:
-        executive_name = st.text_input("Nombre del Directivo")
-        cargo = st.selectbox("Cargo", ["CEO / Fundador", "CTO / Director de Tecnología", "COO / Director de Operaciones", "Gerente de Área", "Otro"])
+    st.markdown("<br>", unsafe_allow_html=True)
+    submit_button = st.form_submit_button(label="🚀 Calcular Índice de Exposición C-Level")
 
-    submitted = st.form_submit_button("🚀 Generar Resumen Express de Riesgo")
+# Procesamiento al hacer clic
+if submit_button:
+    # Lógica de puntuación y cálculo financiero estimado
+    score = 0
+    
+    # Pregunta 1
+    if "Inmediatamente" in q1: score += 40
+    elif "pocas semanas" in q1: score += 20
+    else: score += 5
+    
+    # Pregunta 2
+    if "Cada colaborador" in q2: score += 35
+    elif "cuentas corporativas" in q2: score += 20
+    else: score += 5
+    
+    # Pregunta 3
+    if "Horas de trabajo" in q3: score += 25
+    elif "macros" in q3: score += 15
+    else: score += 5
 
-# Lógica al enviar el formulario
-if submitted:
-    if not corporate_email or not company_name:
-        st.error("⚠️ Por favor, ingresa el nombre de la empresa y tu correo corporativo para procesar el diagnóstico.")
+    # Límite máximo de exposición 100%
+    exposure = min(score, 95)
+    
+    # Estimaciones financieras basadas en el riesgo
+    perdida_amnesia = "$45,000 - $120,000 USD" if exposure > 60 else "$15,000 - $40,000 USD" if exposure > 30 else "$5,000 USD (Riesgo Bajo)"
+    costo_friccion = "Alto (Sueldos quemados en tareas manuales repetitivas)" if "Horas de trabajo" in q3 else "Moderado (Ineficiencias intermitentes)" if "macros" in q3 else "Optimizado"
+
+    st.success("¡Diagnóstico procesado con éxito por el motor de SmartWorld AI!")
+    
+    st.markdown(f"""
+    ## 📊 Reporte Preliminar Ejecutivo
+    """)
+    
+    if exposure >= 60:
+        st.error(f"🚨 **Nivel de Exposición Crítica: {exposure}% (Riesgo Alto)**")
+    elif exposure >= 30:
+        st.warning(f"⚠️ **Nivel de Exposición Moderada: {exposure}% (Atención Requerida)**")
     else:
-        # Cálculo simple de riesgo basado en las respuestas
-        risk_score = 0
-        if "Inmediatamente" in p1: risk_score += 35
-        elif "pocas semanas" in p1: risk_score += 20
-        
-        if "Cada colaborador" in p2: risk_score += 35
-        elif "cuentas corporativas" in p2: risk_score += 20
-        
-        if "Horas de trabajo" in p3: risk_score += 30
-        elif "macros" in p3: risk_score += 15
+        st.success(f"✅ **Nivel de Exposición Controlada: {exposure}% (Estructura Estable)**")
 
-        st.success("✅ ¡Diagnóstico procesado con éxito por el motor de SmartWorld AI!")
-        
-        # Resultado del Resumen Express (Gratuito)
-        st.markdown(f"### 📊 Reporte Preliminar para: {company_name}")
-        
-        if risk_score > 50:
-            st.error(f"🚨 **Nivel de Exposición Crítica: {risk_score}% (Riesgo Alto)**")
-            st.markdown("""
-                * **Diagnóstico Brainness (Amnesia Corporativa):** Su organización corre un peligro inminente de pérdida de patrimonio intelectual ante la fuga de talento clave.
-                * **Diagnóstico EurekAI (Inmunidad Operativa):** Detectamos vulnerabilidades severas por uso de *Shadow AI* y cuellos de botella transaccionales.
-            """)
-        else:
-            st.warning(f"⚠️ **Nivel de Exposición Moderada: {risk_score}% (Riesgo Latente)**")
-            st.markdown("Su empresa cuenta con ciertos controles, pero presenta puntos ciegos importantes en la gobernanza de su Propiedad Intelectual y flujos operativos.")
+    st.markdown(f"""
+    <div class='metric-card'>
+    <ul>
+        <li><b>Impacto Estimado por Amnesia Corporativa:</b> Pérdida potencial anualizada valorada en <b>{perdida_amnesia}</b> por dependencia de talento crítico.</li>
+        <li><b>Vulnerabilidad de Datos (Shadow AI):</b> Exposición activa de flujos e información sensible ante plataformas de terceros sin gobernanza.</li>
+        <li><b>Fricción Operativa (ERP/Logística):</b> Nivel detectado: <b>{costo_friccion}</b>.</li>
+    </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
-        # La Oferta High Ticket de Entrada (El Resumen Ejecutivo de Pago)
-        st.markdown("---")
-        st.markdown("### 💎 Desbloquea el Resumen Ejecutivo & Plan de Blindaje (Living BlueBook)")
-        st.info("""
-            Este **Resumen Express** es solo la superficie. El **Resumen Ejecutivo Completo (Living BlueBook en PDF)** incluye:
-            1. La auditoría matemática exacta de sus fugas financieras.
-            2. La arquitectura personalizada de **Blindaje Patrimonial (Brainness Corp)**.
-            3. La ruta de despliegue del **AI Pain-Matching Engine (EurekAI On-Demand™)** para su ERP.
-        """)
-        
-        # Botón de pasarela de pago o agendamiento C-Level
-        st.markdown(
-            """
-            <a href="https://calendly.com" target="_blank">
-                <button style="background-color:#2563EB; color:white; padding:12px 20px; border:none; border-radius:5px; font-size:16px; font-weight:bold; cursor:pointer; width:100%;">
-                    💳 Adquirir Resumen Ejecutivo y Agendar Sesión C-Level ($150 USD)
-                </button>
-            </a>
-            """,
-            unsafe_allow_html=True
-        )
+    st.markdown("""
+    ---
+    ### 💎 Desbloquea el Resumen Ejecutivo & Plan de Blindaje (Living BlueBook)
+    """)
+    
+    st.info("""
+    Este **Resumen Express** muestra la superficie del problema. El **Resumen Ejecutivo Completo (Living BlueBook en PDF)** incluye:
+    1. La auditoría matemática exacta de sus fugas financieras y costos de ineficiencia ocultos.
+    2. La arquitectura personalizada de **Blindaje Patrimonial (Brainness Corp)** para asegurar su propiedad intelectual.
+    3. La hoja de ruta de despliegue del **AI Pain-Matching Engine (EurekAI On-Demand™)** adaptada a su ERP / operaciones.
+    """)
+    
+    # Botón de pasarela de pago / agendamiento
+    st.markdown("""
+    <div style='text-align: center; margin-top: 25px;'>
+        <a href='https://buy.stripe.com/tu-enlace-de-pago' target='_blank' style='background-color: #2563EB; color: white; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 16px; box-shadow: 0 4px 12px rgba(37,99,235,0.4);'>
+            💳 Adquirir Resumen Ejecutivo y Agendar Sesión C-Level ($150 USD)
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
