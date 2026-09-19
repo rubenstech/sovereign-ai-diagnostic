@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Estilos CSS avanzados para forzar texto blanco y legibilidad total en modo oscuro
+# Estilos CSS avanzados con corrección específica para el botón de envío
 st.markdown("""
     <style>
     /* Forzar fondo oscuro en toda la aplicación */
@@ -19,8 +19,8 @@ st.markdown("""
         background-color: rgba(0,0,0,0);
     }
     
-    /* Forzar texto blanco o gris claro en elementos de texto general, markdown y radios */
-    p, span, label, .stRadio label, div[data-baseweb="radio"] div {
+    /* Forzar texto claro en elementos generales y radios (excepto botones) */
+    p, span:not(.stButton span), label:not(.stButton label), .stRadio label, div[data-baseweb="radio"] div {
         color: #E2E8F0 !important;
     }
     
@@ -30,17 +30,22 @@ st.markdown("""
         font-weight: 600;
     }
 
-    /* Botón principal corporativo */
+    /* Botón principal corporativo corregido */
     .stButton>button { 
-        width: 100%; 
-        background-color: #2563EB; 
-        color: white; 
-        font-weight: bold; 
-        border-radius: 8px; 
-        padding: 12px; 
-        border: none;
+        width: 100% !important; 
+        background-color: #3B82F6 !important; 
+        color: #0F172A !important; 
+        font-weight: 700 !important; 
+        border-radius: 8px !important; 
+        padding: 12px !important; 
+        border: none !important;
     }
-    .stButton>button:hover { background-color: #1D4ED8; }
+    .stButton>button p, .stButton>button span {
+        color: #0F172A !important;
+    }
+    .stButton>button:hover { 
+        background-color: #60A5FA !important; 
+    }
     
     /* Tarjeta de métricas */
     .metric-card { 
