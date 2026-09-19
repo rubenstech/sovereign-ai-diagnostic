@@ -7,10 +7,10 @@ st.set_page_config(
     layout="centered"
 )
 
-# Estilos CSS optimizados para forzar el fondo oscuro y corregir la visibilidad
+# Estilos CSS avanzados para forzar texto blanco y legibilidad total en modo oscuro
 st.markdown("""
     <style>
-    /* Forzar fondo oscuro en todo el contenedor principal de Streamlit */
+    /* Forzar fondo oscuro en toda la aplicación */
     [data-testid="stAppViewContainer"] {
         background-color: #0F172A;
         color: #F8FAFC;
@@ -18,6 +18,19 @@ st.markdown("""
     [data-testid="stHeader"] {
         background-color: rgba(0,0,0,0);
     }
+    
+    /* Forzar texto blanco o gris claro en elementos de texto general, markdown y radios */
+    p, span, label, .stRadio label, div[data-baseweb="radio"] div {
+        color: #E2E8F0 !important;
+    }
+    
+    /* Títulos de secciones y preguntas más claros */
+    h3 {
+        color: #FFFFFF !important;
+        font-weight: 600;
+    }
+
+    /* Botón principal corporativo */
     .stButton>button { 
         width: 100%; 
         background-color: #2563EB; 
@@ -25,8 +38,11 @@ st.markdown("""
         font-weight: bold; 
         border-radius: 8px; 
         padding: 12px; 
+        border: none;
     }
     .stButton>button:hover { background-color: #1D4ED8; }
+    
+    /* Tarjeta de métricas */
     .metric-card { 
         background: #1E293B; 
         padding: 20px; 
